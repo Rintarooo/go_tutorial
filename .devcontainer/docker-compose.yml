@@ -1,0 +1,17 @@
+version: "2"
+services:
+  go-tutorial:
+    image: go-tutorial:latest
+    build: 
+      context: ..
+      dockerfile: ./.devcontainer/Dockerfiles/go/Dockerfile
+    tty: true
+    # hostname: localhost
+    # environment:
+      # - APP_ENV=local
+      # - l=ls -pGF
+    # volumes:
+    #   - ..:/app
+    ports:
+      - "127.0.0.1:3000:8080"
+    # working_dir: /app
