@@ -2,8 +2,8 @@ FROM golang:1.19.1-alpine
 # https://zenn.dev/mirai_33/articles/1ea902d2e96b47
 
 # WORKDIR /go/src
-ENV WORK_DIR /gin1
-ENV SRC_DIR ./app/cmd/gin1
+ENV WORK_DIR /gin6
+ENV SRC_DIR ./app/cmd/gin6
 # ./app/cmd/server/
 # ./app
 WORKDIR ${WORK_DIR}
@@ -18,8 +18,9 @@ COPY ${SRC_DIR} ${WORK_DIR}
 
 RUN go mod init main \
     # && go get -u github.com/gin-gonic/gin \
-    && go mod tidy \
-    && go build
+    && go mod tidy 
+    # \
+    # && go build
 # RUN go get github.com/gin-gonic/gin@latest
 
 # CMD ["go", "run", "/go/src/cmd/api/main.go"]
@@ -27,5 +28,6 @@ RUN go mod init main \
 # CMD ["go", "run", "/app/cmd/chap1/main.go"]
 # CMD ["go", "run", ${WORK_DIR}"main.go"]
 # CMD [".${WORK_DIR}/main"]
-CMD ["./main"]
+# CMD ["./main"]
 # CMD ["cat" "go.mod"]
+CMD ["go", "run", "./main.go"]

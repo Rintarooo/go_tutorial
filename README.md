@@ -5,6 +5,7 @@
 * Gin
 
 ## Usage
+### Docker
 please see Makefile in more detail. 
 ```bash
 make build
@@ -33,3 +34,16 @@ docker-compose -f .devcontainer/docker-compose.yml down
 # 	    -d '{"sample1": "f39259", \
 # 	         "sample2": "0"}'
 ```
+
+### Local on M1 Mac
+```bash
+brew install go
+go version
+
+cd ./app/cmd/gin6/
+go mod init main
+go mod tidy
+go run main.go
+```
+
+GOPATH was deprecated in Go 1.10. Go 1.11 introduced module, enabling an alternative workflow.
