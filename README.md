@@ -8,9 +8,19 @@
 ### Docker
 please see Makefile in more detail. 
 ```bash
+# build
 make build
+
+# start local server. port 3000
 make up
+
+# curl
 make curl
+
+# debug
+make logs
+
+# down local server.
 make down
 ```
 

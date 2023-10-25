@@ -20,7 +20,12 @@ var snack1 = []snacks{
 
 func getJsonById(ctx *gin.Context) {
 	// id, err := strconv.Atoi(ctx.Param("id"))
+
+	// URL(Path) parameter. http://localhost:3000/2
 	id := ctx.Param("id")
+
+	// Query parameter. http://localhost:3000/?id=2
+	// id := ctx.Query("id")
 	
 	for _, k := range snack1 {
 		if k.ID == id {
