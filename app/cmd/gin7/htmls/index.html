@@ -4,13 +4,19 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Chapter 01: 初めてのJavaScript</title>
+    <title>Go tutorial demo</title>
   </head>
   <body>
-    <p>ここを書き換える</p>
-    <script>
+    <h1>投稿画面</h1>
+    <p>投稿してね！</p>
+    <!-- <script>
       document.querySelector('p').textContent = 'Hello World~~~';
       // console.log('Hello World~~~~!!!');
-    </script>
+    </script> -->
+    <form action="/post_id" method="post">
+        <p><textarea name="result" rows="5" cols="30"></textarea></p>
+        <!-- <p><input type="button" value="投稿ボタン" />  -->
+        <p><input type="submit" value="投稿ボタン" /> 
+    </form>
   </body>
 </html>

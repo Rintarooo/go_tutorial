@@ -48,6 +48,19 @@ func openMainPage(ctx *gin.Context) {
 	// ctx.IndentedJSON(http.StatusNotFound, gin.H{"message": "not found index.html"})
 }
 
+func getPostById(ctx *gin.Context){
+  // ctx.HTML(200, "index.html", gin.H{"data": data})
+	result := ctx.PostForm("result")
+
+	ctx.IndentedJSON(http.StatusOK,  gin.H{
+		"message": "投稿が完了しました。",
+		"result":  result,
+	})
+
+	return
+	ctx.IndentedJSON(http.StatusNotFound, gin.H{"message": "id not found"})
+}
+
 func main(){
 	// fmt.Println("Hello!")
 	router := gin.Default()
@@ -55,5 +68,6 @@ func main(){
 	router.LoadHTMLGlob("./htmls/*.html")
 	router.GET("/", openMainPage)
 	router.GET("/:id", getJsonById)
+	router.POST("/post_id", getPostById)
 	router.Run()
 }
