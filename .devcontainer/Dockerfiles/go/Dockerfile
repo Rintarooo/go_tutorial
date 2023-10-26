@@ -1,33 +1,20 @@
-FROM golang:1.19.1-alpine
-# https://zenn.dev/mirai_33/articles/1ea902d2e96b47
-
-# WORKDIR /go/src
-ENV WORK_DIR /gin6
-ENV SRC_DIR ./app/cmd/gin6
-# ./app/cmd/server/
-# ./app
+FROM golang:1.19 as builder
+ENV WORK_DIR /gin7
+ENV LOCAL_DIR ./app/cmd${WORK_DIR}
 WORKDIR ${WORK_DIR}
+COPY ${LOCAL_DIR}/go.mod \
+     ${LOCAL_DIR}/go.sum \
+     ${LOCAL_DIR}/main.go .
+RUN CGO_ENABLED=0 go build -o /bin/main main.go
+# ENTRYPOINT ["/bin/main"]
 
-RUN apk update && apk add git
+FROM alpine:latest
+ENV WORK_DIR /gin7
+ENV LOCAL_DIR ./app/cmd${WORK_DIR}
+WORKDIR ${WORK_DIR}
+COPY ${LOCAL_DIR} .
+COPY --from=builder /bin/main .
+ENTRYPOINT ["./main"]
 
-# EXPOSE 50051
-# EXPOSE 8080
-
-
-COPY ${SRC_DIR} ${WORK_DIR}
-
-RUN go mod init main \
-    # && go get -u github.com/gin-gonic/gin \
-    && go mod tidy 
-    # \
-    # && go build
-# RUN go get github.com/gin-gonic/gin@latest
-
-# CMD ["go", "run", "/go/src/cmd/api/main.go"]
-# CMD ["go", "run", "/app/src/cmd/chap1/main.go"]
-# CMD ["go", "run", "/app/cmd/chap1/main.go"]
-# CMD ["go", "run", ${WORK_DIR}"main.go"]
-# CMD [".${WORK_DIR}/main"]
-# CMD ["./main"]
-# CMD ["cat" "go.mod"]
-CMD ["go", "run", "./main.go"]
+# https://zenn.dev/mirai_33/articles/1ea902d2e96b47
+# https://mixi-developers.mixi.co.jp/go-remote-debug-5c8dda2d7064
