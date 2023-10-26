@@ -5,14 +5,21 @@
 * Gin
 
 ## Usage
-### Docker
+```bash
+git clone https://github.com/Rintarooo/my_webgl_tutorial.git
+```
+
+### Start local server using Docker
 please see Makefile in more detail. 
 ```bash
 # build
 make build
 
-# start local server. port 3000
+# start local server.
 make up
+
+# check PORTS. make sure the port 3000 of localhost is open to the port 8080 of the container.
+docker ps
 
 # curl
 make curl
@@ -26,11 +33,14 @@ make down
 
 if you don't use Makefile, run the following commands. 
 ```bash
+# build
 docker-compose -f .devcontainer/docker-compose.yml build go-tutorial
-# docker-compose -f .devcontainer/docker-compose.yml run --rm go-tutorial /bin/sh
+# comment out ENTRYPOINT in Dockerfile and get in the container 
+docker-compose -f .devcontainer/docker-compose.yml run --rm go-tutorial /bin/sh
+# start local server
 docker-compose -f .devcontainer/docker-compose.yml up -d
 
-# localhostの3000がコンテナの8080のポートに、PORTSが開かれていることを確認
+# check PORTS. make sure the port 3000 of localhost is open to the port 8080 of the container.
 docker ps
 
 curl http://localhost:3000
