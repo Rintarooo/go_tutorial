@@ -1,4 +1,4 @@
-yml := .devcontainer/docker-compose.yml
+yml := .devcontainer/docker-compose.local.yml
 service := go-tutorial
 port := 3000
 

@@ -6,7 +6,7 @@
 
 ## Usage
 ```bash
-git clone https://github.com/Rintarooo/my_webgl_tutorial.git
+git clone https://github.com/Rintarooo/go_tutorial
 ```
 
 ### Start local server using Docker
@@ -34,19 +34,19 @@ make down
 if you don't use Makefile, run the following commands. 
 ```bash
 # build
-docker-compose -f .devcontainer/docker-compose.yml build go-tutorial
+docker-compose -f .devcontainer/docker-compose.local.yml build go-tutorial
 # comment out ENTRYPOINT in Dockerfile and get in the container 
-docker-compose -f .devcontainer/docker-compose.yml run --rm go-tutorial /bin/sh
+docker-compose -f .devcontainer/docker-compose.local.yml run --rm go-tutorial /bin/sh
 # start local server
-docker-compose -f .devcontainer/docker-compose.yml up -d
+docker-compose -f .devcontainer/docker-compose.local.yml up -d
 
 # check PORTS. make sure the port 3000 of localhost is open to the port 8080 of the container.
 docker ps
 
 curl http://localhost:3000
 
-docker-compose -f .devcontainer/docker-compose.yml logs
-docker-compose -f .devcontainer/docker-compose.yml down
+docker-compose -f .devcontainer/docker-compose.local.yml logs
+docker-compose -f .devcontainer/docker-compose.local.yml down
 
 # curl -X 'POST' 'http://localhost:${PORT}/predict' \
 # 	    -H 'accept: application/json' \
