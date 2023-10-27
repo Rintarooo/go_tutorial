@@ -1,5 +1,5 @@
 FROM golang:1.19 as builder
-ENV WORK_DIR /gin8
+ENV WORK_DIR /gin9
 ENV LOCAL_DIR ./app/cmd${WORK_DIR}
 WORKDIR ${WORK_DIR}
 COPY ${LOCAL_DIR}/go.mod \
@@ -9,7 +9,7 @@ RUN CGO_ENABLED=0 go build -o /bin/main main.go
 # ENTRYPOINT ["/bin/main"]
 
 FROM alpine:latest
-ENV WORK_DIR /gin8
+ENV WORK_DIR /gin9
 ENV LOCAL_DIR ./app/cmd${WORK_DIR}
 WORKDIR ${WORK_DIR}
 COPY ${LOCAL_DIR} .
