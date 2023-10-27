@@ -50,15 +50,15 @@ func openMainPage(ctx *gin.Context) {
 
 func getPostById(ctx *gin.Context){
   // ctx.HTML(200, "index.html", gin.H{"data": data})
-	result := ctx.PostForm("result")
-
-	ctx.IndentedJSON(http.StatusOK,  gin.H{
-		"message": "投稿が完了しました。",
-		"result":  result,
-	})
-
-	return
-	ctx.IndentedJSON(http.StatusNotFound, gin.H{"message": "id not found"})
+	id := ctx.PostForm("id")
+	for _, k := range snack1 {
+		if k.ID == id {
+			// ctx.IndentedJSON(http.StatusOK, gin.H{"message": "found your id", "ID": k.ID, "Title": k.Title})
+			ctx.HTML(200, "post_id.html", gin.H{"message": "found your id", "ID": k.ID, "Title": k.Title})
+			return
+		}
+	}	
+	ctx.IndentedJSON(http.StatusNotFound, gin.H{"message": "id not found", "ID":"", "Title":""})
 }
 
 func main(){
