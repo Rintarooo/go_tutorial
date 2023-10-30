@@ -7,7 +7,18 @@ import (
 	"net/http"
 	"io/ioutil"
 	"fmt"
+	"encoding/json"
 )
+
+type Result struct {
+	TrackName   string `json:"trackName"`
+	ArtistName  string `json:"artistName"`
+}
+
+type Response struct {
+	ResultCount int      `json:"resultCount"`
+	Results     []Result `json:"results"`
+}
 
 func openMainPage(ctx *gin.Context) {
 	ctx.HTML(200, "index.html", nil)
@@ -32,9 +43,9 @@ func getMockApi(ctx *gin.Context){
 
 }
 
-func getSearchItunesApi(ctx *gin.Context){
+func postSearchItunesApi(ctx *gin.Context){
 	// http://127.0.0.1:3000/api/itunes/search/punpee
-	artist := ctx.Param("artist")
+	artist := ctx.PostForm("artist")
 	res, err := http.Get(fmt.Sprintf("https://itunes.apple.com/search?term=%s&entity=song", artist))
 	if err != nil {
 			ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -47,7 +58,19 @@ func getSearchItunesApi(ctx *gin.Context){
 			ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 	}
-	ctx.Data(http.StatusOK, "application/json", body)
+	// ctx.Data(http.StatusOK, "application/json", body)
+	// ctx.Data(http.StatusOK, "application/json", body.results)
+	var response Response
+  err = json.Unmarshal(body, &response)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	for _, result := range response.Results {
+		// fmt.Println("Track Name:", result.TrackName)
+		// fmt.Println("Artist Name:", result.ArtistName)
+		ctx.IndentedJSON(500, gin.H{"Artist Name:" : result.ArtistName, "Track Name:" : result.TrackName})
+	}
 }
 
 func main(){
@@ -56,6 +79,6 @@ func main(){
 	router.GET("/", openMainPage)
 	router.GET("/api/mock", getMockApi)
 	// http://127.0.0.1:3000/api/itunes/search/punpee
-	router.GET("/api/itunes/search/:artist", getSearchItunesApi)
+	router.POST("/api/itunes/search/", postSearchItunesApi)
 	router.Run()
 }

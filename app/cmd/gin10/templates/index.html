@@ -7,11 +7,11 @@
     <title>Go tutorial demo</title>
   </head>
   <body>
-    <h1>IDの画面</h1>
-    <p>あなたのIDを教えてね!</p>
-    <form action="/post_id" method="post">
-      <p><textarea name="id" rows="5" cols="30"></textarea></p>
-      <p><input type="submit" value="Go" /> 
+    <h1>楽曲検索</h1>
+    <p>あなたの好きなアーティストを教えてね!</p>
+    <form action="/api/itunes/search/" method="post">
+      <p><textarea name="artist" rows="2" cols="20"></textarea></p>
+      <p><input type="submit" value="検索" /> 
     </form>
   </body>
 </html>
